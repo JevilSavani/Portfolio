@@ -8,6 +8,13 @@
   --accent-soft: rgba(31, 92, 141, 0.12);
   --border: #d8e2ec;
   --shadow: 0 18px 60px rgba(46, 60, 81, 0.08);
+  --hero-bg: linear-gradient(135deg, #10223d 0%, #1b4a7c 45%, #1f5c8d 100%);
+  --section-bg: #ffffff;
+  --section-border: #d8e2ec;
+  --project-bg: #f7f9fe;
+  --footer-bg: transparent;
+  --footer-border: #d8e2ec;
+  --hero-text: white;
   --radius: 28px;
   --radius-sm: 18px;
   --max-width: 1126px;
@@ -15,6 +22,25 @@
   color: var(--text);
   background: var(--bg);
   line-height: 1.6;
+}
+
+[data-theme="dark"] {
+  --bg: #0b1220;
+  --surface: #152238;
+  --surface-secondary: #1e2c42;
+  --text: #e7edf7;
+  --muted: #a8b4cc;
+  --accent: #4aa3df;
+  --accent-soft: rgba(74, 163, 223, 0.12);
+  --border: rgba(255, 255, 255, 0.10);
+  --shadow: 0 18px 60px rgba(0, 0, 0, 0.40);
+  --hero-bg: linear-gradient(135deg, #10223d 0%, #1b4a7c 45%, #1f5c8d 100%);
+  --section-bg: #202a3b;
+  --section-border: rgba(255, 255, 255, 0.08);
+  --project-bg: #1b2a3f;
+  --footer-bg: transparent;
+  --footer-border: rgba(255, 255, 255, 0.10);
+  --hero-text: white;
 }
 
 * {
@@ -30,6 +56,11 @@ body {
   min-height: 100vh;
   background: radial-gradient(circle at top left, rgba(31, 92, 141, 0.10), transparent 28%),
     linear-gradient(180deg, #eef1f5 0%, #f8fafc 100%);
+}
+
+[data-theme="dark"] body {
+  background: radial-gradient(circle at top left, rgba(74, 163, 223, 0.08), transparent 28%),
+    linear-gradient(180deg, #08101f 0%, #0d172e 100%);
 }
 
 #root {
@@ -55,12 +86,15 @@ a {
 }
 
 .site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 24px 0;
+  gap: 20px;
 }
 
 .site-header nav {
   display: flex;
-  justify-content: center;
   gap: 32px;
 }
 
@@ -80,8 +114,8 @@ a {
 .hero-section {
   position: relative;
   border-radius: 40px;
-  background: linear-gradient(135deg, #10223d 0%, #1b4a7c 45%, #1f5c8d 100%);
-  color: white;
+  background: var(--hero-bg);
+  color: var(--hero-text);
   padding: 100px 32px;
   margin-bottom: 36px;
   overflow: hidden;
@@ -120,11 +154,11 @@ a {
 }
 
 .section {
-  background: #202a3b;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--section-bg);
+  border: 1px solid var(--section-border);
   border-radius: var(--radius);
   padding: 32px;
-  box-shadow: 0 20px 60px rgba(6, 15, 28, 0.18);
+  box-shadow: var(--shadow);
 }
 
 .section-title {
@@ -144,13 +178,13 @@ a {
 .section-title h2 {
   margin: 0;
   font-size: 1.75rem;
-  color: #ffffff;
+  color: var(--text);
 }
 
 .about-section p {
   margin: 0;
   max-width: 760px;
-  color: #cbd5e1;
+  color: var(--muted);
 }
 
 .skills-section .skill-list {
@@ -177,14 +211,39 @@ a {
 .project-card {
   padding: 28px;
   border-radius: 28px;
-  background: var(--surface-secondary);
-  box-shadow: 0 14px 40px rgba(46, 60, 81, 0.08);
-  border: 1px solid var(--border);
+  background: var(--project-bg);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--section-border);
 }
 
 .project-card h3 {
   margin: 0 0 12px;
   font-size: 1.15rem;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.contact-card {
+  padding: 28px;
+  border-radius: 28px;
+  background: var(--project-bg);
+  border: 1px solid var(--section-border);
+  box-shadow: var(--shadow);
+}
+
+.contact-card h3 {
+  margin: 0 0 12px;
+  font-size: 1.15rem;
+}
+
+.contact-card p {
+  margin: 0;
+  color: var(--muted);
 }
 
 .project-card p {
@@ -197,7 +256,23 @@ a {
   padding: 24px 0 0;
   color: var(--muted);
   text-align: center;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--footer-border);
+}
+
+.theme-toggle {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  padding: 10px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  background: var(--surface-secondary);
+  transform: translateY(-1px);
 }
 
 .site-footer p {

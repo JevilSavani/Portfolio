@@ -3,18 +3,27 @@ import './App.css'
 import About from './Pages/about.jsx'
 import Skills from './Pages/skill.jsx'
 import Projects from './Pages/projects.jsx'
+import Contact from './Pages/contact.jsx'
 
-const pageOrder = ['about', 'skills', 'projects']
+const pageOrder = ['about', 'skills', 'projects', 'contact']
 const navItems = [
   { key: 'about', label: 'About' },
   { key: 'skills', label: 'Skills' },
   { key: 'projects', label: 'Projects' },
+  { key: 'contact', label: 'Contact' },
 ]
 
 function App() {
   const [page, setPage] = useState(() => {
     const initial = window.location.hash.slice(1)
     return pageOrder.includes(initial) ? initial : 'about'
+  })
+  const [theme, setTheme] = useState(() => {
+    try {
+      return localStorage.getItem('portfolio-theme') || 'dark'
+    } catch {
+      return 'dark'
+    }
   })
 
   useEffect(() => {
@@ -27,9 +36,19 @@ function App() {
     return () => window.removeEventListener('hashchange', onHashChange)
   }, [])
 
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    try {
+      localStorage.setItem('portfolio-theme', theme)
+    } catch {
+      // ignore
+    }
+  }, [theme])
+
   const currentPage = useMemo(() => {
     if (page === 'skills') return <Skills />
     if (page === 'projects') return <Projects />
+    if (page === 'contact') return <Contact />
     return <About />
   }, [page])
 
@@ -47,6 +66,13 @@ function App() {
             </a>
           ))}
         </nav>
+        <button
+          className="theme-toggle"
+          type="button"
+          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+        >
+          {theme === 'dark' ? 'Light mode' : 'Dark mode'}
+        </button>
       </header>
 
       <section className="hero-section">
